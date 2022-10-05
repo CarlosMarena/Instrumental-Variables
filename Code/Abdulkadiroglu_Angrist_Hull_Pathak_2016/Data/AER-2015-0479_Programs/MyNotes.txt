@@ -1,0 +1,41 @@
+-sch_lettergrade_adj3-sch_lettergrade_adj6 -> School Performance Scores 5-point bin.  
+-cell4-cell5 -> Stratum Dummies  
+	spyear3-spyear6: baseline year dummies.   
+	sch_lettergrade_adj3-sch_lettergrade_adj6: School Performance Scores dummies. A score below 75 correspond to an "F" letter grade and a score above 120 correspond to an "A" letter grade.
+	female: 1 if female, 0 otherwise  
+	Race dummies:
+		- hisp: 1 if hispanice, 0 otherwise 
+		- black: 1 if black, 0 otherwise
+		- white: 1 if white, 0 otherwise
+ 		- asian: 1 if asian, 0 otherwise
+		- otherrace: 1 if other race, 0 otherwise
+	sped3-sped6: special education status dummies. 
+	foodfred3-foodfred6: subsidized luch eligibility status dummies.  
+
+-gf_FL_elig4-gf_FL_elig7: eligibility status dummies for FirstLine.
+-gf_NB_elig4-gf_NB_elig7: eligibility status dummies for New Beginnings.  
+-gf_RN_elig4-gf_RN_elig7: elegibility status dummies for ReNew.
+-gf_SP_elig4-gf_SP_elig7: elegibility status dummies for Spirit.
+-gf_FR_elig4-gf_FR_elig7: elegibility status dummies for Friends.
+-gf_CC_elig4-gf_CC_elig7: elegibility status dummies for Crescent City.
+
+-gf_any_elig4-gf_any_elig7: eligibility status dummies if FL or NB or RN or SP or FR or CC. 0 when no school code or baseline year is missing.
+-temp: max number of eligibility options for each stratum. 
+-samp4-samp7: to be included in the analyss when...
+			- eligible by only one charter school (temp==1) &
+			- no charter in baseline (charter3-charter6==0) & 
+			- RSD New Orleans baseline school (rsd_nola3-rsds_nola6==1) & 
+			- No alternative baseline school (alternative3-alternative6==0) 
+
+-replace samp5 = 0 if samp4==1 (not included in 5th grade when included first time in 4th grade) 
+ replace samp6 = 0 if samp5==1 (not included in 6th grade when included first time in 5th grade)
+ replace samp7 = 0 if samp6==1 (not included in 7th grade when included first time in 6th grade)
+
+No info in stratum and grandfathering dummies if not the first grade sample.  
+-replace cell5 = 0 if samp5==0
+ replace gf_*_elig5 = 0 if samp5==0
+ replace cell6 = 0 if samp6==0
+ replace gf_*_elig6 = 0 if samp6==0
+ replace cell7 = 0 if samp7==0
+ replace gf_*_elig7 = 0 if samp7==0
+
